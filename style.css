@@ -53,3 +53,11 @@ tfoot tr td{
   background: #b8bdee;
   border-color: white;
 }
+
+.O {
+    background: blue;
+}
+
+.X {
+    background: red;
+}
