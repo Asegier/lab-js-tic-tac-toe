@@ -11,6 +11,8 @@ var winningArr = [[0,1,2],
                   [2,4,6]];
 var playerO = [];
 var playerX = [];
+var winner = function() {if (win(playerX) == true || win(playerO) == true){
+return true}}
 
 function turn(){
     if (currentPlayer == 'X'){
@@ -28,8 +30,15 @@ function turn(){
 /*function winner(){
     if 
 }*/
+var clicks = 0;
 
 $("#gameboard").on("click", "td", function(event){
+    
+    clicks ++;
+    
+    if(winner()){
+        return
+    }
     
     var current = event.target;
     var checker = $(current);
@@ -40,19 +49,25 @@ $("#gameboard").on("click", "td", function(event){
                 checker.html("X");
                 checker.addClass("X");
                 playerX.push(cellnum);
-                win(playerX);
-                turn();
- 
+                
+                if( !win(playerX) ){
+                    turn();
+                }
+            
             } else if (currentPlayer == 'O'){
                 checker.html("O");
                 checker.addClass("O");
                 playerO.push(cellnum);
-                win(playerO);
-                turn();
+                if( !win(playerO) ){
+                    turn();
+                }
 
             }
 
         }
+    if (clicks >8){
+        $(".playerTurn").html("It's a tie!")
+    }
     
 });
 
@@ -74,14 +89,17 @@ function win(player){
                 }
             }
             if (total == 3){
-                return alert(currentPlayer + " has Won!")
-                return location.reload();
+
+                $(".playerTurn").html(currentPlayer + " has Won!");
+                return true;
             }
             x++;
         }
         
         i++;
     }
+    
+    return false;
 }
 
 
